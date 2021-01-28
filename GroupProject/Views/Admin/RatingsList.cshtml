@@ -1,0 +1,97 @@
+﻿@model IEnumerable<GroupProject.Models.Rating>
+
+@{
+    ViewBag.Title = "Pending Ratings";
+}
+
+@* TODO! pagination, sort by approved status or username, search by username *@
+
+<h2>@ViewBag.Title</h2>
+
+<div class="tablescroll">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    No.
+                </th>
+                <th>
+                    Approval
+                </th>
+                <th>
+                    Edited
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Created
+                </th>
+                <th>
+                    Stars
+                </th>
+                <th>
+                    Reviewer
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody style="background-color: #eeeeee; opacity:0.9;">
+            @{ int rowNo = 0; }
+            @foreach (var item in Model)
+            {
+                @Html.HiddenFor(modelItem => item.ProductId)
+                @Html.HiddenFor(modelItem => item.RatingText)
+                <tr>
+                    <td>
+                        @(rowNo += 1)
+                    </td>
+                    @if (item.IsApproved == true)
+                    {
+                        <td>
+                            <span class="badge badge-pill badge-success">Approved</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="badge badge-pill badge-danger">Pending</span>
+                        </td>
+                    }
+                    @if (item.IsEdited == true)
+                    {
+                        <td>
+                            <span class="badge badge-pill badge-danger">Edited</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="badge badge-pill badge-success">No Edit</span>
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Products.Manufacturer.Name) @Html.DisplayFor(modelItem => item.Products.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReviewCreated)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stars)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "RatingDetail", new { id = item.RatingId }, new { @class = "hyperlink" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Admin")'">
+    Admin Panel
+</button>

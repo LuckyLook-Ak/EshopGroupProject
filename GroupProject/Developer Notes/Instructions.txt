@@ -1,0 +1,24 @@
+﻿(!) Paypal requires running visual studio as admin to work. dont ask why we dont know
+(!!) Ok now it works even without running vs as admin..... dunno what to tell ya
+
+- Fake paypal account for fake payments:
+
+Email:
+sb-70gza4816454@personal.example.com
+
+Password:
+pd4RJ)?]
+
+- more human fake paypal email for fake payments:
+
+Email:
+ebuytest@personal.com
+
+Password:
+123123123
+
+
+- For missing roslyn/csc.exe file error
+Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
+
+- Initial migration is ready. Just enter update-database in packet manager console and run.

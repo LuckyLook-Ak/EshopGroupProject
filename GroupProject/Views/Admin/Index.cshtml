@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Admin Panel";
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="box-title">
+            <b>@ViewBag.Title</b>
+        </h3>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("IndexRole", "Admin")'">
+    Role List
+</button>
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("UserList", "Admin")'">
+    List Of Users
+</button>
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("RatingsList", "Admin")'">
+    Ratings
+</button>
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("OrderList", "Admin")'">
+    All Orders
+</button>
+
+<hr />
+
+<div>
+    <img src="@Url.Action("ChartBar")" alt="Chart" />
+</div>
+
+

@@ -1,0 +1,52 @@
+﻿@model GroupProject.ViewModel.QueryParamArgs
+@{
+    ViewBag.Title = "Browse Products";
+}
+
+<main class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Products</h1>
+        <hr />
+    </div>
+
+<div id="dataModel"></div>
+
+</main>
+
+@section SignalR{
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <script type="text/javascript">
+
+        function getAll() {
+            var data = @Html.Raw(Json.Encode(Model));
+            var model = $('#dataModel');
+            $.ajax({
+                url: '/Products/GetProductData?SortOrder=' + data.sortOrder +
+                    '&CurrentFilter=' + data.currentFilter +
+                    '&SearchString=' + data.searchString +
+                    '&SelectedCategory=' + data.selectedCategory +
+                    '&SelectedManufacturer=' + data.selectedManufacturer +
+                    '&Page=' + data.page,
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) {
+                    model.empty().append(result);
+                }
+            });
+
+            var cart = $('#cart-update');
+            $.ajax({
+                url: '@Url.Action("Cart", "ShoppingCart")',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) {
+                    cart.empty().append(result);
+                }
+            });
+        }
+    </script>
+}  

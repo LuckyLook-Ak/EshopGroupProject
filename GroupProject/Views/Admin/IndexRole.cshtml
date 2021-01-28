@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Roles";
+}
+
+@* OM: TODO! make descriptions part of model and not hardcoded *@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="box-title">
+            <b>@ViewBag.Title</b>
+        </h3>
+    </div>
+</div>
+
+<table class="table table-bordered;">
+
+    <thead class="thead-dark" style="background-color: #eeeeee; opacity:0.975;">
+        <tr>
+            <td>
+                <h4>
+                    <b>Existing User Roles:</b>
+                </h4>
+            </td>
+            <td><h4><b>Description</b></h4></td>
+        </tr>
+    </thead>
+
+    <tbody style="background-color: #eeeeee; opacity:0.9;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @if (item.Name == "Admin") 
+                    {
+                    @*@Html.ActionLink("Delete", "DeleteRole", new { id = item.Id })*@
+                        @: Has sole access to Admin panel
+                    }
+                    else if (item.Name == "Employee")
+                    {
+                        @: Only has access to product editing utilities
+                    }
+                    else if (item.Name == "User")
+                    {
+                        @: Has access to personal cart and can make orders
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+@*<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("CreateRole", "Admin")'">
+    Create Role
+</button>*@
+<button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Admin")'">
+    Admin Panel
+</button>
+
+

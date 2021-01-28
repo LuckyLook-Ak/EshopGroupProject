@@ -1,0 +1,12 @@
+﻿- use modelerror for all model errors in controllers 
+- tidy all in view and inline css to site.css
+- tidy up all scripts in renders and call them in layout
+(tidying up left to future extension)
+(- add description for each role in models and startup and display it on admin panel)(for future extention, currently hardcoded)
+- auto logout users on browser close (it has something to do with browser, but how do you force delete session data?) (not urgent, future extention)
+- option to add quantity of products to cart(future extension)
+- turn everything you can to async(not urgent, future extention)
+- make admin able to change other account's passwords
+- if you press submit on a form fast, then multiple requests will be sent and processed... how to avoid this server side?
+(example) create a new product and press the create button fast, and duplicate products will be created
+- make shoppingcart/index a table that shows all data of each product

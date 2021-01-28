@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Ebuy</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/custom")
+    @Styles.Render("~/Content/fontawesome")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" href="~/Images/logo.png" />
+
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="progress-br float shadow">
+                <div class="progress__item"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END LOADER -->
+    <!-- Start header -->
+    <header class="top-navbar sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href='@Url.Action("Index", "Home")'>
+                    <img src="~/Images/logo-hosting.png" alt="" width="160" height="60" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item @(ViewBag.PageName == "Products" ? "active" : "")">@Html.ActionLink("Catalog", "Index", "Products", null, new { @class = "nav-link" })</li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item @(ViewBag.PageName == "Admin" ? "active" : "")">@Html.ActionLink("Admin Panel", "Index", "Admin", null, new { @class = "nav-link" })</li>
+                        }
+                        @if (User.IsInRole("User"))
+                        {
+                            if (ViewBag.PageName == "Cart")
+                            {
+                                <li class="nav-item @(ViewBag.PageName == "Cart" ? "active" : "")">@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <button type="button" class="Cart @(ViewBag.PageName == "Cart" ? "active" : "")" data-toggle="modal" data-target="#Cart">@{Html.RenderAction("CartSummary", "ShoppingCart");}</button>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                        <li class="searchbar-li">
+                            @using (Html.BeginForm("Index", "Products", FormMethod.Get))
+                            {
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, null, new { @class = "searchbar form-control", @placeholder = "Search for Products" });
+                            }
+                        </li>
+                    </ul>
+
+                    @Html.Partial("_LoginPartial")
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- End header -->
+
+    <div class="container body-content">
+
+        @RenderBody()
+    </div>
+    @if (User.IsInRole("User"))
+    {
+        // OM: Pure CSS modal
+        <div class="modal fade" id="Cart" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Shopping Cart</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="cart-update">
+                        @* Cart PartialView gets inserted here *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+
+    <footer class="footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-xs-12">
+                    <div class="widget clearfix">
+                        <div class="widget-title">
+                            <h3>About US</h3>
+                        </div>
+                        <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis dis montes.</p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="widget clearfix">
+                        <div class="widget-title">
+
+
+                        </div>
+                        <ul class="footer-links">
+                            <!-- links here -->
+                        </ul>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="copyrights">
+            <div class="container">
+                <div class="footer-distributed">
+                    <div class="footer-left">
+                        <p><a href="https://www.peoplecert.org/" style="color:white">PeopleCert</a> &copy; @DateTime.Now.Year CB12 C# FullTime - Group Project (OM, PC, MM, AK)</p>
+                    </div>
+
+                    <div class="footer-right">
+                        <ul class="footer-links-soi">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-github"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
+    @RenderSection("scripts", required: false)
+    @RenderSection("ApiProducts", required: false)
+
+    @* SignalR script to refresh cart in any view *@
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var hubNotify = $.connection.updateProductsHub;
+
+            $.connection.hub.start().done(function () {
+                getAll();
+            });
+            hubNotify.client.refreshCartData = function () {
+                getAll();
+            };
+        });
+
+        function getAll() {
+            var cart = $('#cart-update');
+            $.ajax({
+                url: '@Url.Action("Cart", "ShoppingCart")',
+                contentType: 'application/html ; charset:utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) {
+                    cart.empty().append(result);
+                }
+            });
+        }
+
+    </script>
+
+    @RenderSection("Signalr", required: false)
+
+    @* For Manage/Orders action to show order details  *@
+    <script>
+
+        $(document).ready(function () {
+            $('.showdetails').click(function () {
+                $('.hidden').eq($(this).index('.showdetails')).toggle();
+            });
+        });
+
+    </script>
+
+    @* prevent double posting client side *@
+    <script>
+        document.querySelectorAll('form').forEach((form) => {
+            form.addEventListener('submit', (e) => {
+                if (form.classList.contains('is-submitting')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                };
+
+                form.classList.add('is-submitting');
+            });
+        });
+    </script>
+
+</body>
+</html>
